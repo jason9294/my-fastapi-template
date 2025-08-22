@@ -1,0 +1,8 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+## 命名規範
+- 提供依賴的函數，使用 provide_ 前綴
