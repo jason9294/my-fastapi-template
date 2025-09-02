@@ -19,7 +19,6 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     settings = Settings()  # type: ignore
-    print(settings)
     if settings.secret_key == "change_me":
         ...  # TODO warning
     return settings
