@@ -7,9 +7,9 @@ from app.schemas.user_schema import UserSchema
 
 class UserService:
     def __init__(
-            self,
-            session: SessionDependency,
-            user_repo: UserRepository = Depends(),
+        self,
+        session: SessionDependency,
+        user_repo: UserRepository = Depends(),
     ):
         self.session = session
         self.user_repo = user_repo

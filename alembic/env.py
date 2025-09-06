@@ -1,15 +1,10 @@
-import os
 from logging.config import fileConfig
 
-from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
 from sqlmodel import SQLModel
 
 from alembic import context
 from app.core import get_settings
-from app.models import *
-
-load_dotenv()  # 這樣自動載入 .env 內容
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -20,7 +15,7 @@ settings = get_settings()
 # 設定資料庫連線
 db_url = settings.database_url
 if db_url:
-    config.set_main_option('sqlalchemy.url', db_url)
+    config.set_main_option("sqlalchemy.url", db_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -78,9 +73,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

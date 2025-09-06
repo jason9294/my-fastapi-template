@@ -8,5 +8,5 @@
     "**/__pycache__": true
   },
   "explorerExclude.backup": {},
-  "cSpell.words": ["onupdate", "testpaths"]
+  "cSpell.words": ["onupdate", "testpaths", "typer"]
 }

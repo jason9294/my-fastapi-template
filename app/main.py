@@ -1,11 +1,13 @@
 import os
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import ORJSONResponse
 from fastapi.routing import APIRoute
 
 from app.api import api_router
+from app.core.problem import PROBLEM_CONTENT_TYPE, ProblemException
 from app.core.setting import get_settings
 
 
@@ -43,21 +45,25 @@ def create_app():
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[
-            "http://localhost:9000",     # 本機端（指定端口，例如前端應用程式）
+            "http://localhost:9000",  # 本機端（指定端口，例如前端應用程式）
         ],
-        allow_credentials=True,          # 若需要允許 cookies，設為 True
-        allow_methods=["*"],             # 設定允許的方法，["*"] 代表所有方法
-        allow_headers=["*"],             # 設定允許的 headers，["*"] 代表所有 headers
+        allow_credentials=True,  # 若需要允許 cookies，設為 True
+        allow_methods=["*"],  # 設定允許的方法，["*"] 代表所有方法
+        allow_headers=["*"],  # 設定允許的 headers，["*"] 代表所有 headers
         expose_headers=["Content-Type", "Set-Cookie"],
     )
     app.include_router(api_router)
+
+    @app.exception_handler(ProblemException)
+    async def handle_problem_exc(request: Request, exc: ProblemException):
+        problem_details = exc.problem
+        return ORJSONResponse(
+            content=problem_details.model_dump(),
+            status_code=problem_details.status,
+            media_type=PROBLEM_CONTENT_TYPE,
+        )
 
     return app
 
 
 app = create_app()
-
-
-# @app.exception_handler(NotFoundInDBError)
-# async def not_found_exception_handler(request, exc):
-#     raise HTTPException(status_code=404, detail=str(exc))

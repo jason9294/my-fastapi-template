@@ -1,6 +1,17 @@
+# my-fastapi-template
+
+## 專案使用工具
+
+- 專案管理工具
+  - just
+  - poetry
+- 框架
+  - FastAPI
+  - sqlmodel
+
 ## 專案結構
 
-```
+```text
 my-fastapi-template/
 ├─ pyproject.toml                     # 專案設定 (Poetry)
 ├─ README.md                          # 專案說明
@@ -74,5 +85,5 @@ my-fastapi-template/
    ├─ auth/                           # 認證/授權策略模組化
    │  ├─ jwt_provider.py
    │  ├─ oauth_providers/             # Google/GitHub/OIDC
-   │  └─ permissions.py               # RBAC/ABAC
+   │  └─ permissions.py               # RBAC
 ```
